@@ -15,6 +15,9 @@ def download_video(link,location,index=''):
     video = YouTube(link)
     quality = video.streams.get_highest_resolution()
     quality.download(output_path=location,filename_prefix=index)
+    desc_file=f"{location if location is not None else ''}{chr(92) if os.name=='nt' else '/'}{index}{video.title}.txt"
+    with open(desc_file,"w+") as f:
+        f.write(video.description)
     print(f"Done....{str(quality.resolution).ljust(8,'.')}{video.title}")
 
 def main():
